@@ -1,0 +1,12 @@
+#ticket-booking-wrapper {
+  display: grid;
+  grid-template-rows: auto;
+  grid-template-columns: auto;
+  height: 5cm;
+  border: 1cm black solid;
+}
+
+#ticket-form {
+  grid-column: 0;
+  grid-row: 2;
+}
