@@ -1,4 +1,4 @@
-import { createSlice, nanoid, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 const initialState = {
   airports: [],
@@ -11,3 +11,5 @@ const airportsSlice = createSlice({
   initialState,
   reducers: {},
 });
+
+export default airportsSlice.reducer;
