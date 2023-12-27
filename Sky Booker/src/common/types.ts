@@ -1,4 +1,4 @@
-import { store } from "../src/app/store";
+import { store } from "../app/store";
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
@@ -10,7 +10,7 @@ type error = string | null | undefined;
 export interface Airport {
   id: number;
   code: string;
-  title: string
+  title: string;
 }
 
 export interface AirportsSliceState {

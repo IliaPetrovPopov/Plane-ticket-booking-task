@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { GET_AIRPORTS_URL } from "../../../common/paths";
+import { GET_AIRPORTS_URL } from "../../common/paths";
 
 export const fetchAirports = createAsyncThunk(
   "airports/fetchAirports",

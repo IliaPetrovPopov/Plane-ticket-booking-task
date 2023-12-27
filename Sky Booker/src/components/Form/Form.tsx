@@ -1,11 +1,12 @@
 import { useEffect, useRef, useState } from "react";
-import { useAppDispatch, useAppSelector } from "../../src/app/hooks";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import {
   getAllAirports,
   getStatus,
-} from "../../src/features/airports/airportsSlice";
-import { fetchAirports } from "../../src/thunks/airports/fetchAirports";
+} from "../../features/airports/airportsSlice";
+import { fetchAirports } from "../../thunks/airports/fetchAirports";
 import { Airport } from "../../common/types";
+import AirportOption from "../AirportOption/AirportOption";
 
 const AddBookingForm: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -110,9 +111,7 @@ const AddBookingForm: React.FC = () => {
             Select Departure Airport
           </option>
           {departureAirports.map((airport: Airport) => (
-            <option key={airport.id} value={airport.code}>
-              {airport.title}
-            </option>
+            <AirportOption key={airport.id} airport={airport} />
           ))}
         </select>
 
@@ -127,9 +126,7 @@ const AddBookingForm: React.FC = () => {
             Select Destination Airport
           </option>
           {destinationAirports.map((airport: Airport) => (
-            <option key={airport.id} value={airport.code}>
-              {airport.title}
-            </option>
+            <AirportOption key={airport.id} airport={airport} />
           ))}
         </select>
 

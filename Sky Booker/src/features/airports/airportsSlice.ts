@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { fetchAirports } from "../../thunks/airports/fetchAirports";
-import { RootState } from "../../../common/types";
-import { AirportsSliceState } from "../../../common/types";
+import { RootState } from "../../common/types";
+import { AirportsSliceState } from "../../common/types";
 
 const initialState: AirportsSliceState = {
   airports: [],
