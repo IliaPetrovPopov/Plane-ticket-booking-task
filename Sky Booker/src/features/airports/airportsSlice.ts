@@ -30,6 +30,6 @@ const airportsSlice = createSlice({
 });
 
 export const getAllAirports = (state: RootState) => state.airports.airports;
-export const getStatus = (state: RootState) => state.airports.status;
+export const getAirportsStatus = (state: RootState) => state.airports.status;
 
 export default airportsSlice.reducer;
