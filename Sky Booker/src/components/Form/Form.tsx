@@ -1,13 +1,17 @@
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import {
   getAllAirports,
-  getStatus,
+  getAirportsStatus,
 } from "../../features/airports/airportsSlice";
 import { fetchAirports } from "../../thunks/airports/fetchAirports";
 import { Airport } from "../../common/types";
 import AirportOption from "../AirportOption/AirportOption";
-import { onAirportChanged, onNameChanged } from "../../handlers/formHandlers";
+import {
+  onInputChanged,
+  onAirportChanged,
+  onAddBookingClick,
+} from "../../handlers/formHandlers";
 
 const AddBookingForm: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -20,15 +24,20 @@ const AddBookingForm: React.FC = () => {
   const [departureAirports, setDepartureAirports] = useState<Airport[]>([]);
   const [destinationAirports, setDestinationAirports] = useState<Airport[]>([]);
 
+  const [selectedDepartureAirportID, setSelectedDepartureAirportID] =
+    useState(0);
+  const [selectedDestinationAirportID, setSelectedDestinationAirportID] =
+    useState(0);
+
   const [selectedDepartureAirport, setSelectedDepartureAirport] = useState("");
   const [selectedDestinationAirport, setSelectedDestinationAirport] =
     useState("");
 
-  // const [departureDate, setDepartureDate] = useState("");
-  // const [dateOfReturn, setDateOfReturn] = useState("");
+  const [departureDate, setDepartureDate] = useState("");
+  const [returnDate, setReturnDate] = useState("");
 
   const airports = useAppSelector(getAllAirports);
-  const airportsStatus = useAppSelector(getStatus);
+  const airportsStatus = useAppSelector(getAirportsStatus);
 
   useEffect(() => {
     if (effectRan.current === false) {
@@ -57,12 +66,7 @@ const AddBookingForm: React.FC = () => {
           id="postTitle"
           name="postTitle"
           value={firstName}
-          onChange={(e) =>
-            onNameChanged(
-              setFirstName,
-              e,
-            )
-          }
+          onChange={(e) => onInputChanged(e, setFirstName)}
         />
 
         <label htmlFor="postTitle">Your Last Name</label>
@@ -71,12 +75,7 @@ const AddBookingForm: React.FC = () => {
           id="postTitle"
           name="postTitle"
           value={lastName}
-          onChange={(e) =>
-            onNameChanged(
-              setLastName,
-              e,
-            )
-          }
+          onChange={(e) => onInputChanged(e, setLastName)}
         />
 
         <label htmlFor="postTitle">Departure Airport</label>
@@ -89,7 +88,8 @@ const AddBookingForm: React.FC = () => {
               airports,
               e,
               setDestinationAirports,
-              setSelectedDepartureAirport
+              setSelectedDepartureAirport,
+              setSelectedDepartureAirportID
             )
           }
         >
@@ -111,7 +111,8 @@ const AddBookingForm: React.FC = () => {
               airports,
               e,
               setDepartureAirports,
-              setSelectedDestinationAirport
+              setSelectedDestinationAirport,
+              setSelectedDestinationAirportID
             )
           }
         >
@@ -123,25 +124,43 @@ const AddBookingForm: React.FC = () => {
           ))}
         </select>
 
-        <span>
+        <div>
           <label htmlFor="datePicker">Depart:</label>
           <input
             type="date"
-            id="datePicker"
-            name="datePicker"
-            // value={selectedDate}
-            // onChange={handleDateChange}
+            id="departDatePicker"
+            name="departDatePicker"
+            value={departureDate}
+            onChange={(e) => onInputChanged(e, setDepartureDate)}
+            min={new Date().toISOString().split("T")[0]}
           />
 
           <label htmlFor="datePicker">Return:</label>
           <input
             type="date"
-            id="datePicker"
-            name="datePicker"
-            // value={selectedDate}
-            // onChange={handleDateChange}
+            id="returnDatePicker"
+            name="returnDatePicker"
+            value={returnDate}
+            onChange={(e) => onInputChanged(e, setReturnDate)}
+            min={new Date().toISOString().split("T")[0]}
           />
-        </span>
+        </div>
+
+        <div
+          onClick={() =>
+            onAddBookingClick(
+              dispatch,
+              firstName,
+              lastName,
+              selectedDepartureAirportID,
+              selectedDestinationAirportID,
+              departureDate,
+              returnDate
+            )
+          }
+        >
+          Add Booking
+        </div>
       </form>
     </section>
   );
