@@ -10,18 +10,21 @@ import { Airport } from "../common/types";
 const AddBookingForm: React.FC = () => {
   const dispatch = useAppDispatch();
 
-  const airports = useAppSelector(getAllAirports);
-
   const effectRan = useRef(false);
 
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [airportsOptions, setAirportsOptions] = useState<JSX.Element[]>([]);
-  const [departureAirport, setDepartureAirport] = useState("");
-  const [destinationAirport, setDestinationAirport] = useState("");
+
+  const [departureAirports, setDepartureAirports] = useState<Airport[]>([]);
+  const [destinationAirports, setDestinationAirports] = useState<Airport[]>([]);
+
+  const [selectedDepartureAirport, setSelectedDepartureAirport] = useState("");
+  const [selectedDestinationAirport, setSelectedDestinationAirport] = useState("");
+
   // const [departureDate, setDepartureDate] = useState("");
   // const [dateOfReturn, setDateOfReturn] = useState("");
 
+  const airports = useAppSelector(getAllAirports);
   const airportsStatus = useAppSelector(getStatus);
 
   useEffect(() => {
@@ -37,12 +40,8 @@ const AddBookingForm: React.FC = () => {
   }, [dispatch, airportsStatus]);
 
   useEffect(() => {
-    const options = airports.map((airport: Airport) => (
-      <option key={airport.id} value={airport.code}>
-        {airport.title}
-      </option>
-    ));
-    setAirportsOptions(options);
+    setDepartureAirports(airports);
+    setDestinationAirports(airports);
   }, [airports]);
 
   const onFirstNameChanged = (e: React.ChangeEvent<HTMLInputElement>) =>
@@ -55,25 +54,26 @@ const AddBookingForm: React.FC = () => {
     e: React.ChangeEvent<HTMLSelectElement>
   ) => {
     const selectedAirportCode = e.target.value;
-    console.log(selectedAirportCode);
-    
-    setDepartureAirport(selectedAirportCode);
-    
-    const remainingAirports = airports
-      .filter((airport: Airport) => airport.code !== selectedAirportCode)
-      .map((airport: Airport) => (
-        <option key={airport.id} value={airport.code}>
-          {airport.title}
-        </option>
-      ));
-      
-    setAirportsOptions(remainingAirports);
+
+    const remainingAirports = airports.filter(
+      (airport: Airport) => airport.code !== selectedAirportCode
+    );
+
+    setDestinationAirports(remainingAirports);
+    setSelectedDepartureAirport(selectedAirportCode);
   };
 
   const onDestinationAirportChanged = (
     e: React.ChangeEvent<HTMLSelectElement>
   ) => {
-    setDestinationAirport(e.target.value);
+    const selectedAirportCode = e.target.value;
+
+    const remainingAirports = airports.filter(
+      (airport: Airport) => airport.code !== selectedAirportCode
+    );
+
+    setDepartureAirports(remainingAirports);
+    setSelectedDestinationAirport(selectedAirportCode);
   };
 
   return (
@@ -102,26 +102,34 @@ const AddBookingForm: React.FC = () => {
         <select
           id="departureAirports"
           name="departureAirport"
-          value={departureAirport}
+          value={selectedDepartureAirport}
           onChange={onDepartureAirportChanged}
         >
           <option value="" disabled>
             Select Departure Airport
           </option>
-          {airportsOptions}
+          {departureAirports.map((airport: Airport) => (
+            <option key={airport.id} value={airport.code}>
+              {airport.title}
+            </option>
+          ))}
         </select>
 
         <label htmlFor="postTitle">Destination Airport</label>
         <select
           id="destinationAirports"
           name="destinationAirport"
-          value={destinationAirport}
+          value={selectedDestinationAirport}
           onChange={onDestinationAirportChanged}
         >
           <option value="" disabled>
             Select Destination Airport
           </option>
-          {airportsOptions}
+          {destinationAirports.map((airport: Airport) => (
+            <option key={airport.id} value={airport.code}>
+              {airport.title}
+            </option>
+          ))}
         </select>
 
         <span>
