@@ -7,6 +7,7 @@ import {
 import { fetchAirports } from "../../thunks/airports/fetchAirports";
 import { Airport } from "../../common/types";
 import AirportOption from "../AirportOption/AirportOption";
+import { onAirportChanged, onNameChanged } from "../../handlers/formHandlers";
 
 const AddBookingForm: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -46,38 +47,6 @@ const AddBookingForm: React.FC = () => {
     setDestinationAirports(airports);
   }, [airports]);
 
-  const onFirstNameChanged = (e: React.ChangeEvent<HTMLInputElement>) =>
-    setFirstName(e.target.value);
-
-  const onLastNameChanged = (e: React.ChangeEvent<HTMLInputElement>) =>
-    setLastName(e.target.value);
-
-  const onDepartureAirportChanged = (
-    e: React.ChangeEvent<HTMLSelectElement>
-  ) => {
-    const selectedAirportCode = e.target.value;
-
-    const remainingAirports = airports.filter(
-      (airport: Airport) => airport.code !== selectedAirportCode
-    );
-
-    setDestinationAirports(remainingAirports);
-    setSelectedDepartureAirport(selectedAirportCode);
-  };
-
-  const onDestinationAirportChanged = (
-    e: React.ChangeEvent<HTMLSelectElement>
-  ) => {
-    const selectedAirportCode = e.target.value;
-
-    const remainingAirports = airports.filter(
-      (airport: Airport) => airport.code !== selectedAirportCode
-    );
-
-    setDepartureAirports(remainingAirports);
-    setSelectedDestinationAirport(selectedAirportCode);
-  };
-
   return (
     <section>
       <h2>Add New Booking</h2>
@@ -88,7 +57,12 @@ const AddBookingForm: React.FC = () => {
           id="postTitle"
           name="postTitle"
           value={firstName}
-          onChange={onFirstNameChanged}
+          onChange={(e) =>
+            onNameChanged(
+              setFirstName,
+              e,
+            )
+          }
         />
 
         <label htmlFor="postTitle">Your Last Name</label>
@@ -97,7 +71,12 @@ const AddBookingForm: React.FC = () => {
           id="postTitle"
           name="postTitle"
           value={lastName}
-          onChange={onLastNameChanged}
+          onChange={(e) =>
+            onNameChanged(
+              setLastName,
+              e,
+            )
+          }
         />
 
         <label htmlFor="postTitle">Departure Airport</label>
@@ -105,7 +84,14 @@ const AddBookingForm: React.FC = () => {
           id="departureAirports"
           name="departureAirport"
           value={selectedDepartureAirport}
-          onChange={onDepartureAirportChanged}
+          onChange={(e) =>
+            onAirportChanged(
+              airports,
+              e,
+              setDestinationAirports,
+              setSelectedDepartureAirport
+            )
+          }
         >
           <option value="" disabled>
             Select Departure Airport
@@ -120,7 +106,14 @@ const AddBookingForm: React.FC = () => {
           id="destinationAirports"
           name="destinationAirport"
           value={selectedDestinationAirport}
-          onChange={onDestinationAirportChanged}
+          onChange={(e) =>
+            onAirportChanged(
+              airports,
+              e,
+              setDepartureAirports,
+              setSelectedDestinationAirport
+            )
+          }
         >
           <option value="" disabled>
             Select Destination Airport
