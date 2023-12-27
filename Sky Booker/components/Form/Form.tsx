@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from "react";
-import { useAppDispatch, useAppSelector } from "../src/app/hooks";
+import { useAppDispatch, useAppSelector } from "../../src/app/hooks";
 import {
   getAllAirports,
   getStatus,
-} from "../src/features/airports/airportsSlice";
-import { fetchAirports } from "../src/thunks/airports/fetchAirports";
-import { Airport } from "../common/types";
+} from "../../src/features/airports/airportsSlice";
+import { fetchAirports } from "../../src/thunks/airports/fetchAirports";
+import { Airport } from "../../common/types";
 
 const AddBookingForm: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -19,7 +19,8 @@ const AddBookingForm: React.FC = () => {
   const [destinationAirports, setDestinationAirports] = useState<Airport[]>([]);
 
   const [selectedDepartureAirport, setSelectedDepartureAirport] = useState("");
-  const [selectedDestinationAirport, setSelectedDestinationAirport] = useState("");
+  const [selectedDestinationAirport, setSelectedDestinationAirport] =
+    useState("");
 
   // const [departureDate, setDepartureDate] = useState("");
   // const [dateOfReturn, setDateOfReturn] = useState("");
