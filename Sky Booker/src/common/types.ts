@@ -13,8 +13,24 @@ export interface Airport {
   title: string;
 }
 
+export interface Booking {
+  id ?: string;
+  firstName: string,
+  lastName: string,
+  departureAirportId: number,
+  arrivalAirportId: number,
+  departureDate: string,
+  returnDate: string
+}
+
 export interface AirportsSliceState {
   airports: Airport[];
+  status: status;
+  error: error;
+}
+
+export interface BookingsSliceState {
+  bookings: Booking[];
   status: status;
   error: error;
 }
