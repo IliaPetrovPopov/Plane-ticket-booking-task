@@ -1,5 +1,6 @@
 import { Airport, AppDispatch } from "../common/types";
 import { postBooking } from "../thunks/bookings/postBooking";
+import { isAirportEntered, isInputValid } from "../utils/formValidations";
 
 export const onInputChanged = (
   e: React.ChangeEvent<HTMLInputElement>,
@@ -50,7 +51,7 @@ export const onReturnDateChanged = (
 ) => {
   const selectedReturnDate = e?.target?.value;
   setReturnDate(selectedReturnDate);
-  
+
   if (departureDate && departureDate > selectedReturnDate) {
     setDepartureDate(selectedReturnDate);
   }
@@ -66,6 +67,10 @@ export const onAddBookingClick = async (
   returnDate: string,
   successCallback: () => void
 ) => {
+  
+  isInputValid(firstName, lastName, departureDate, returnDate);
+  isAirportEntered(departureAirportId, arrivalAirportId);
+
   const bookingData = {
     firstName,
     lastName,

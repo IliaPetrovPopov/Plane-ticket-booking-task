@@ -1,17 +1,33 @@
-import { MIN_NAME_LENGTH } from "../common/constants"
+import { EMPTY_INPUT, DEFAULT_AIRPORT_ID } from "../common/constants";
+import { errorMessages } from "../common/errors";
 
-const isNameValid = (name: string) => {
-  if(name.length < MIN_NAME_LENGTH) {
-    throw new Error();
+export const isInputValid = (
+  firstName: string,
+  lastName: string,
+  departureDate: string,
+  returnDate: string
+) => {
+  if (firstName === EMPTY_INPUT || lastName === EMPTY_INPUT) {
+    throw new Error(errorMessages.emptyNameInput);
+  }
+
+  if (departureDate === EMPTY_INPUT || returnDate === EMPTY_INPUT) {
+    throw new Error(errorMessages.emptyDateInput);
   }
 
   return true;
-}
+};
 
-// const isInputValid = (input: string) => {
-//   if(input === "") {
-//     return false;
-//   }
+export const isAirportEntered = (
+  departureAirportId: number,
+  arrivalAirportId: number
+) => {
+  if (
+    departureAirportId === DEFAULT_AIRPORT_ID ||
+    arrivalAirportId === DEFAULT_AIRPORT_ID
+  ) {
+    throw new Error(errorMessages.noAirportSelected);
+  }
 
-//   return true;
-// }
+  return true;
+};
