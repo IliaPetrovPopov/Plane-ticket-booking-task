@@ -6,6 +6,7 @@ import {
   getBookingsStatus,
 } from "../../features/bookings/bookingsSlice";
 import { Booking } from "../../common/types";
+import SingleBooking from "../SingleBooking/SingleBooking";
 
 const ListWithBookings: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -18,7 +19,7 @@ const ListWithBookings: React.FC = () => {
   useEffect(() => {
     if (effectRan.current === false) {
       if (bookingsStatus === "idle") {
-        dispatch(fetchBookings()).unwrap();
+        dispatch(fetchBookings());
       }
 
       return () => {
@@ -30,9 +31,7 @@ const ListWithBookings: React.FC = () => {
   return (
     <section>
       {bookings.map((booking: Booking) => (
-        <div key={booking.id}>
-          <p>{booking.firstName}</p>
-        </div>
+        <SingleBooking key={booking.id} booking={booking} />
       ))}
     </section>
   );
