@@ -5,7 +5,7 @@ export const fetchAirports = createAsyncThunk(
   "airports/fetchAirports",
   async () => {
     const response = await fetch(GET_AIRPORTS_URL);
-    const data = await response.json();
+    const data = await response?.json();
 
     return data;
   }

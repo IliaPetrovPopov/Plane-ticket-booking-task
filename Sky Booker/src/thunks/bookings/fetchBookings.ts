@@ -6,7 +6,7 @@ export const fetchBookings = createAsyncThunk(
   async () => {
     const response = await fetch(GET_BOOKINGS_URL);
     
-    const data = await response.json();
+    const data = await response?.json();
     
     return data;
   }
