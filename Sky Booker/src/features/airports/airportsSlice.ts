@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { fetchAirports } from "../../thunks/airports/fetchAirports";
-import { RootState } from "../../common/types";
+import { Airport, RootState } from "../../common/types";
 import { AirportsSliceState } from "../../common/types";
 
 const initialState: AirportsSliceState = {
@@ -31,5 +31,10 @@ const airportsSlice = createSlice({
 
 export const getAllAirports = (state: RootState) => state.airports.airports;
 export const getAirportsStatus = (state: RootState) => state.airports.status;
+export const getSpecificAirportTitle = (state: RootState, id: number): Airport => {
+  return state.airports.airports.find(
+    (airport: Airport) => airport.id === id
+  )!;
+};
 
 export default airportsSlice.reducer;
