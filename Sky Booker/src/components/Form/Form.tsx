@@ -1,22 +1,18 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import {
-  getAllAirports,
-  getAirportsStatus,
-} from "../../features/airports/airportsSlice";
-import { fetchAirports } from "../../thunks/airports/fetchAirports";
+import { getAllAirports } from "../../features/airports/airportsSlice";
 import { Airport } from "../../common/types";
 import AirportOption from "../AirportOption/AirportOption";
 import {
   onInputChanged,
   onAirportChanged,
   onAddBookingClick,
+  onDepartureDateChanged,
+  onReturnDateChanged,
 } from "../../handlers/formHandlers";
 
 const AddBookingForm: React.FC = () => {
   const dispatch = useAppDispatch();
-
-  const effectRan = useRef(false);
 
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -37,19 +33,6 @@ const AddBookingForm: React.FC = () => {
   const [returnDate, setReturnDate] = useState("");
 
   const airports = useAppSelector(getAllAirports);
-  const airportsStatus = useAppSelector(getAirportsStatus);
-
-  useEffect(() => {
-    if (effectRan.current === false) {
-      if (airportsStatus === "idle") {
-        dispatch(fetchAirports());
-      }
-
-      return () => {
-        effectRan.current = true;
-      };
-    }
-  }, [dispatch, airportsStatus]);
 
   useEffect(() => {
     setDepartureAirports(airports);
@@ -131,7 +114,14 @@ const AddBookingForm: React.FC = () => {
             id="departDatePicker"
             name="departDatePicker"
             value={departureDate}
-            onChange={(e) => onInputChanged(e, setDepartureDate)}
+            onChange={(e) =>
+              onDepartureDateChanged(
+                e,
+                returnDate,
+                setDepartureDate,
+                setReturnDate
+              )
+            }
             min={new Date().toISOString().split("T")[0]}
           />
 
@@ -141,13 +131,20 @@ const AddBookingForm: React.FC = () => {
             id="returnDatePicker"
             name="returnDatePicker"
             value={returnDate}
-            onChange={(e) => onInputChanged(e, setReturnDate)}
+            onChange={(e) =>
+              onReturnDateChanged(
+                e,
+                departureDate,
+                setDepartureDate,
+                setReturnDate
+              )
+            }
             min={new Date().toISOString().split("T")[0]}
           />
         </div>
 
         <div
-          onClick={() =>
+          onClick={() => {
             onAddBookingClick(
               dispatch,
               firstName,
@@ -155,9 +152,18 @@ const AddBookingForm: React.FC = () => {
               selectedDepartureAirportID,
               selectedDestinationAirportID,
               departureDate,
-              returnDate
-            )
-          }
+              returnDate,
+              () => {
+                setFirstName('');
+                setLastName('');
+                setSelectedDepartureAirportID(0);
+                setSelectedDestinationAirportID(0);
+                setSelectedDepartureAirport('');
+                setSelectedDestinationAirport('');
+                setDepartureDate('');
+                setReturnDate('');
+              })
+          }}
         >
           Add Booking
         </div>
