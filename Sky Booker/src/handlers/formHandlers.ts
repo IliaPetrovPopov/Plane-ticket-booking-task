@@ -1,11 +1,10 @@
-import { useAppDispatch } from "../app/hooks";
 import { Airport, AppDispatch } from "../common/types";
 import { postBooking } from "../thunks/bookings/postBooking";
 
 export const onInputChanged = (
   e: React.ChangeEvent<HTMLInputElement>,
   setState: React.Dispatch<React.SetStateAction<string>>
-) => setState(e.target.value);
+) => setState(e?.target?.value);
 
 export const onAirportChanged = (
   airports: Airport[],
@@ -17,8 +16,8 @@ export const onAirportChanged = (
   const selectedAirportCode = e.target.value;
 
   const remainingAirports = airports.filter((airport: Airport) => {
-    if (airport.code === selectedAirportCode) {
-      setSelectedAirportID(airport.id);
+    if (airport?.code === selectedAirportCode) {
+      setSelectedAirportID(airport?.id);
       return false;
     }
 
@@ -29,15 +28,43 @@ export const onAirportChanged = (
   setSelectedAirport(selectedAirportCode);
 };
 
+export const onDepartureDateChanged = (
+  e: React.ChangeEvent<HTMLInputElement>,
+  returnDate: string,
+  setDepartureDate: React.Dispatch<React.SetStateAction<string>>,
+  setReturnDate: React.Dispatch<React.SetStateAction<string>>
+) => {
+  const selectedDepartureDate = e?.target?.value;
+  setDepartureDate(selectedDepartureDate);
+
+  if (returnDate && returnDate < selectedDepartureDate) {
+    setReturnDate(selectedDepartureDate);
+  }
+};
+
+export const onReturnDateChanged = (
+  e: React.ChangeEvent<HTMLInputElement>,
+  departureDate: string,
+  setDepartureDate: React.Dispatch<React.SetStateAction<string>>,
+  setReturnDate: React.Dispatch<React.SetStateAction<string>>
+) => {
+  const selectedReturnDate = e?.target?.value;
+  setReturnDate(selectedReturnDate);
+  
+  if (departureDate && departureDate > selectedReturnDate) {
+    setDepartureDate(selectedReturnDate);
+  }
+};
+
 export const onAddBookingClick = async (
-  // e: React.MouseEvent<HTMLDivElement>,
   dispatch: AppDispatch,
   firstName: string,
   lastName: string,
   departureAirportId: number,
   arrivalAirportId: number,
   departureDate: string,
-  returnDate: string
+  returnDate: string,
+  successCallback: () => void
 ) => {
   const bookingData = {
     firstName,
@@ -48,8 +75,7 @@ export const onAddBookingClick = async (
     returnDate,
   };
 
-  const createNewPost = await dispatch(postBooking(bookingData));
+  await dispatch(postBooking(bookingData))?.unwrap();
 
-  console.log(createNewPost);
-  
+  successCallback();
 };
