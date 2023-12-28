@@ -3,7 +3,7 @@ import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import {
   getSpecificAirportTitle,
 } from "../../features/airports/airportsSlice";
-import { Booking } from "../../common/types";
+import { Booking, RootState } from "../../common/types";
 import { onDeleteBookingClick } from "../../handlers/listHandlers";
 import { formatDate } from "../../utils/dateFormatting";
 
@@ -14,11 +14,11 @@ interface SingleBookingProps {
 const SingleBooking: React.FC<SingleBookingProps> = ({ booking }) => {
   const dispatch = useAppDispatch();
 
-  const departureAirport = useAppSelector((state) =>
+  const departureAirport = useAppSelector((state: RootState) =>
     getSpecificAirportTitle(state, booking?.departureAirportId)
   );
 
-  const arrivalAirport = useAppSelector((state) =>
+  const arrivalAirport = useAppSelector((state: RootState) =>
     getSpecificAirportTitle(state, booking?.arrivalAirportId)
   );
 
