@@ -1,30 +1,39 @@
-# React + TypeScript + Vite
+# Sky Booker
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Sky Booker uses API to receive certain number of airports. 
 
-Currently, two official plugins are available:
+It does request to the same API, in order to create new bookings, delete certain one or get bookings. If any bookings are added, the api requests 5, by default and upon scrolling to the bottom of the page, a new request is made for another 5 (if there are more than 5 bookings in the API).
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Upon adding new booking there is no new request made, but instead the booking is send to the bottom of the bookings list. When the page is refreshed, everything comes into place and that booking goes to the end of the bookings array. This can be improved.
 
-## Expanding the ESLint configuration
+Tests are made about every part of the app, except for the deletion of booking.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Installation
 
-- Configure the top-level `parserOptions` property like this:
+To install the project, use the following command:
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
+```bash
+npm install
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+## Usage
+
+To run the project, use the following command:
+
+```bash
+npm run dev
+```
+
+To test the project, use the following command:
+
+```bash
+npm run test
+```
+## Features
+
+- Add Booking: Form, which serves purpose for creating new bookings. It has input fields for first & last name, departure & arrival airports, departure & return dates. The adding is done via button, which, when clicked, saves the booking in the API and adds the booking to the state.
+  
+- List Bookings: Lists all the bookings, upon requesting them. The request URL has query parameters, which tell how much bookings should be send per request. They are set to the default value - 5.
+  
+- Delete Booking: Delete button, which deletes certain booking and re-renders the state.
+
