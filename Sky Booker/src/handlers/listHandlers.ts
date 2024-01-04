@@ -5,6 +5,5 @@ export const onDeleteBookingClick = async (
   dispatch: AppDispatch,
   booking: Booking
 ) => {
-  
   await dispatch(deleteBooking(booking)).unwrap();
 };

@@ -13,9 +13,9 @@ export const postBooking = createAsyncThunk(
       },
       body: JSON.stringify(requestData),
     });
-  
+
     const data = await response?.json();
-    
+
     return data;
   }
 );

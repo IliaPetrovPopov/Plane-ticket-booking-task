@@ -67,7 +67,6 @@ export const onAddBookingClick = async (
   returnDate: string,
   successCallback: () => void
 ) => {
-  
   isInputValid(firstName, lastName, departureDate, returnDate);
   isAirportEntered(departureAirportId, arrivalAirportId);
 

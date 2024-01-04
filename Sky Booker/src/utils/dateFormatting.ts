@@ -6,8 +6,8 @@ export const formatDate = (dateString: string) => {
   const year = date.getFullYear().toString();
 
   return `${day}-${month}-${year}`;
-}
+};
 
 export const padTo2Digits = (num: number) => {
-  return num.toString().padStart(2, '0');
-}
+  return num.toString().padStart(2, "0");
+};
