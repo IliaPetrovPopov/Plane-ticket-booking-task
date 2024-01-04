@@ -3,11 +3,10 @@ import "./App.css";
 import Form from "./components/Form/Form";
 import ListWithBookings from "./components/ListWithBookings/ListWithBookings";
 import { fetchAirports } from "./thunks/airports/fetchAirports";
-// import { fetchBookings } from "./thunks/bookings/fetchBookings";
 import { useAppDispatch, useAppSelector } from "./app/hooks";
 import { getAirportsStatus } from "./features/airports/airportsSlice";
 
-function App() {
+const App = () => {
   const dispatch = useAppDispatch();
 
   const effectRan = useRef(false);
@@ -27,13 +26,13 @@ function App() {
       };
     }
   }, [dispatch, airportsStatus]);
-  
+
   return (
-    <>
+    <div id="components">
       <Form />
       <ListWithBookings />
-    </>
+    </div>
   );
-}
+};
 
 export default App;

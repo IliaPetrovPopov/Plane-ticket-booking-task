@@ -10,6 +10,7 @@ import {
   onDepartureDateChanged,
   onReturnDateChanged,
 } from "../../handlers/formHandlers";
+import "./Form.css";
 
 const AddBookingForm: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -40,110 +41,150 @@ const AddBookingForm: React.FC = () => {
   }, [airports]);
 
   return (
-    <section>
-      <h2>Add New Booking</h2>
+    <section className="add-booking-form">
+      <h2 id="add-new-booking-title">Add New Booking</h2>
       <form>
-        <label htmlFor="postTitle">Your First Name</label>
-        <input
-          type="text"
-          id="postTitle"
-          name="postTitle"
-          value={firstName}
-          onChange={(e) => onInputChanged(e, setFirstName)}
-        />
-
-        <label htmlFor="postTitle">Your Last Name</label>
-        <input
-          type="text"
-          id="postTitle"
-          name="postTitle"
-          value={lastName}
-          onChange={(e) => onInputChanged(e, setLastName)}
-        />
-
-        <label htmlFor="postTitle">Departure Airport</label>
-        <select
-          id="departureAirports"
-          name="departureAirport"
-          value={selectedDepartureAirport}
-          onChange={(e) =>
-            onAirportChanged(
-              airports,
-              e,
-              setDestinationAirports,
-              setSelectedDepartureAirport,
-              setSelectedDepartureAirportID
-            )
-          }
-        >
-          <option value="" disabled>
-            Select Departure Airport
-          </option>
-          {departureAirports.map((airport: Airport) => (
-            <AirportOption key={airport.id} airport={airport} />
-          ))}
-        </select>
-
-        <label htmlFor="postTitle">Destination Airport</label>
-        <select
-          id="destinationAirports"
-          name="destinationAirport"
-          value={selectedDestinationAirport}
-          onChange={(e) =>
-            onAirportChanged(
-              airports,
-              e,
-              setDepartureAirports,
-              setSelectedDestinationAirport,
-              setSelectedDestinationAirportID
-            )
-          }
-        >
-          <option value="" disabled>
-            Select Destination Airport
-          </option>
-          {destinationAirports.map((airport: Airport) => (
-            <AirportOption key={airport.id} airport={airport} />
-          ))}
-        </select>
-
-        <div>
-          <label htmlFor="datePicker">Depart:</label>
-          <input
-            type="date"
-            id="departDatePicker"
-            name="departDatePicker"
-            value={departureDate}
-            onChange={(e) =>
-              onDepartureDateChanged(
-                e,
-                returnDate,
-                setDepartureDate,
-                setReturnDate
-              )
-            }
-            min={new Date().toISOString().split("T")[0]}
-          />
-
-          <label htmlFor="datePicker">Return:</label>
-          <input
-            type="date"
-            id="returnDatePicker"
-            name="returnDatePicker"
-            value={returnDate}
-            onChange={(e) =>
-              onReturnDateChanged(
-                e,
-                departureDate,
-                setDepartureDate,
-                setReturnDate
-              )
-            }
-            min={new Date().toISOString().split("T")[0]}
-          />
+        <div className="form-row">
+          <div className="label-column">
+            <label htmlFor="firstName">Your First Name:</label>
+          </div>
+          <div className="input-column">
+            <input
+              type="text"
+              id="firstName"
+              name="firstName"
+              value={firstName}
+              onChange={(e) => onInputChanged(e, setFirstName)}
+            />
+          </div>
         </div>
 
-        <div
+        <div className="form-row">
+          <div className="label-column">
+            <label htmlFor="lastName">Your Last Name:</label>
+          </div>
+          <div className="input-column">
+            <input
+              type="text"
+              id="lastName"
+              name="lastName"
+              value={lastName}
+              onChange={(e) => onInputChanged(e, setLastName)}
+            />
+          </div>
+        </div>
+
+        <div className="form-row">
+          <div className="label-column">
+            <label htmlFor="departDatePicker">Depart:</label>
+          </div>
+          <div className="input-column">
+            <input
+              type="date"
+              className="date-pickers"
+              id="departDatePicker"
+              name="departDatePicker"
+              value={departureDate}
+              onKeyDown={(e) => e.preventDefault()}
+              onChange={(e) =>
+                onDepartureDateChanged(
+                  e,
+                  returnDate,
+                  setDepartureDate,
+                  setReturnDate
+                )
+              }
+              min={new Date().toISOString().split("T")[0]}
+            />
+          </div>
+        </div>
+
+        <div className="form-row">
+          <div className="label-column">
+            <label htmlFor="returnDatePicker">Return:</label>
+          </div>
+          <div className="input-column">
+            <input
+              type="date"
+              className="date-pickers"
+              id="returnDatePicker"
+              name="returnDatePicker"
+              value={returnDate}
+              onChange={(e) =>
+                onReturnDateChanged(
+                  e,
+                  departureDate,
+                  setDepartureDate,
+                  setReturnDate
+                )
+              }
+              onKeyDown={(e) => e.preventDefault()}
+              min={new Date().toISOString().split("T")[0]}
+            />
+          </div>
+        </div>
+
+        <div className="form-row">
+          <div className="label-column">
+            <label htmlFor="departureAirport">Departure Airport:</label>
+          </div>
+          <div className="input-column">
+            <select
+              id="departureAirport"
+              name="departureAirport"
+              value={selectedDepartureAirport}
+              onChange={(e) =>
+                onAirportChanged(
+                  airports,
+                  e,
+                  setDestinationAirports,
+                  setSelectedDepartureAirport,
+                  setSelectedDepartureAirportID
+                )
+              }
+            >
+              <option value="" disabled>
+                Select Departure Airport
+              </option>
+              {departureAirports.map((airport: Airport) => (
+                <AirportOption key={airport.id} airport={airport} />
+              ))}
+            </select>
+          </div>
+        </div>
+
+        <div className="form-row">
+          <div className="label-column">
+            <label htmlFor="destinationAirport">Destination Airport:</label>
+          </div>
+          <div className="input-column">
+            <select
+              id="destinationAirport"
+              name="destinationAirport"
+              value={selectedDestinationAirport}
+              onChange={(e) =>
+                onAirportChanged(
+                  airports,
+                  e,
+                  setDepartureAirports,
+                  setSelectedDestinationAirport,
+                  setSelectedDestinationAirportID
+                )
+              }
+            >
+              <option value="" disabled>
+                Select Destination Airport
+              </option>
+              {destinationAirports.map((airport: Airport) => (
+                <AirportOption key={airport.id} airport={airport} />
+              ))}
+            </select>
+          </div>
+        </div>
+
+        <button
+          id="add-booking-button"
+          type="button"
           onClick={() => {
             onAddBookingClick(
               dispatch,
@@ -154,19 +195,20 @@ const AddBookingForm: React.FC = () => {
               departureDate,
               returnDate,
               () => {
-                setFirstName('');
-                setLastName('');
+                setFirstName("");
+                setLastName("");
                 setSelectedDepartureAirportID(0);
                 setSelectedDestinationAirportID(0);
-                setSelectedDepartureAirport('');
-                setSelectedDestinationAirport('');
-                setDepartureDate('');
-                setReturnDate('');
-              })
+                setSelectedDepartureAirport("");
+                setSelectedDestinationAirport("");
+                setDepartureDate("");
+                setReturnDate("");
+              }
+            );
           }}
         >
           Add Booking
-        </div>
+        </button>
       </form>
     </section>
   );

@@ -1,0 +1,44 @@
+#single-booking {
+  background: linear-gradient(135deg, #2c709e, #5697c2, #114964);
+  border-radius: 10px;
+  padding: 16px;
+  margin-bottom: 1cm;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #ffffff;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  width: 18cm;
+}
+
+.booking-info {
+  margin: 10px 0;
+  font-size: 19px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.delete-button {
+  background-color: #205a80;
+  color: #fff;
+  border: none;
+  border-radius: 18px;
+  padding: 14px 16px;
+  cursor: pointer;
+  margin-top: 8px;
+  transition: background-color 0.3s;
+}
+
+.delete-button:hover {
+  background-color: #1572b0;
+}
+
+.delete-button {
+  color: #fff;
+  font-size: 18px;
+  cursor: pointer;
+  transition: transform 0.3s ease-in-out;
+}
+
+.delete-button:hover {
+  transform: scale(1.2);
+}

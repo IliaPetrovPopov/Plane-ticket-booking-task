@@ -1,7 +1,8 @@
-import { store } from "../app/store";
+import { setupStore, store } from "../app/store";
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
+export type AppStore = ReturnType<typeof setupStore>;
 
 type status = "idle" | "loading" | "succeeded" | "failed";
 

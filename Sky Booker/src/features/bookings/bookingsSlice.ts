@@ -36,7 +36,7 @@ const bookingsSlice = createSlice({
       })
       .addCase(fetchBookings.fulfilled, (state, action) => {
         state.status = "succeeded";
-        state.bookings = [...state.bookings, action.payload.list][0];
+        state.bookings = [...state.bookings, ...action.payload.list];
       })
       .addCase(fetchBookings.rejected, (state, action) => {
         state.status = "failed";

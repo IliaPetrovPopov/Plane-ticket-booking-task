@@ -1,11 +1,10 @@
 import React from "react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import {
-  getSpecificAirportTitle,
-} from "../../features/airports/airportsSlice";
+import { getSpecificAirportTitle } from "../../features/airports/airportsSlice";
 import { Booking, RootState } from "../../common/types";
 import { onDeleteBookingClick } from "../../handlers/listHandlers";
 import { formatDate } from "../../utils/dateFormatting";
+import "./SingleBooking.css";
 
 interface SingleBookingProps {
   booking: Booking;
@@ -22,20 +21,39 @@ const SingleBooking: React.FC<SingleBookingProps> = ({ booking }) => {
     getSpecificAirportTitle(state, booking?.arrivalAirportId)
   );
 
-  const departureAirportTitle = departureAirport ? departureAirport?.title : 'Unknown';
-  const arrivalAirportTitle = arrivalAirport ? arrivalAirport?.title : 'Unknown';
+  const departureAirportTitle = departureAirport
+    ? departureAirport?.title
+    : "Unknown";
+  const arrivalAirportTitle = arrivalAirport
+    ? arrivalAirport?.title
+    : "Unknown";
 
   return (
-    <div>
+    <div id="single-booking" data-testid="single-booking">
       <br />
-      <span>
-        Booked by: {booking?.firstName} {booking?.lastName} |
+      <span className="booking-info">
+        Booked by: {booking?.firstName} {booking?.lastName}
       </span>
-      <span> Departures from: {departureAirportTitle} | </span>
-      <span> Arrives at: {arrivalAirportTitle} | </span>
-      <span> Departure date: {formatDate(booking?.departureDate)} |</span>
-      <span> Return date: {formatDate(booking?.returnDate)} | </span>
-      <button><i className="fa-solid fa-skull-crossbones fa-lg" onClick={(() => onDeleteBookingClick(dispatch, booking))}></i></button>
+      <span className="booking-info">
+        {" "}
+        Departures from: {departureAirportTitle}
+      </span>
+      <span className="booking-info"> Arrives at: {arrivalAirportTitle}</span>
+      <span className="booking-info">
+        {" "}
+        Departure date: {formatDate(booking?.departureDate)}
+      </span>
+      <span className="booking-info">
+        {" "}
+        Return date: {formatDate(booking?.returnDate)}
+      </span>
+      <button
+        className="delete-button"
+        onClick={() => onDeleteBookingClick(dispatch, booking)}
+      >
+        {" "}
+        Delete
+      </button>
     </div>
   );
 };
